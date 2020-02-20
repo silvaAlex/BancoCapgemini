@@ -18,5 +18,6 @@
 ###### para rodar use os comados abaixo
 ```Shell
   cd BancoCapgeminiApi
+  dotnet restore
   dotnet run
 ```
