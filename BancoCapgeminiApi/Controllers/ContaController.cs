@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BancoCapgeminiApi.Controllers
 {
     [ApiController]
-    [Route("v1/contas")]
+    [Route("api/contas")]
     public class ContaController : ControllerBase
     {
         [HttpGet]

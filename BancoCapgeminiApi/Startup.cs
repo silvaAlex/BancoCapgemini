@@ -20,9 +20,11 @@ namespace BancoCapgeminiApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=local.db"));
-            services.AddScoped<DataContext,DataContext>();
+            services.AddDbContext<DataContext>(opt =>
+                opt.UseSqlite("Data Source=local.db"));
+            services.AddScoped<DataContext, DataContext>();
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +34,10 @@ namespace BancoCapgeminiApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseHsts();
 

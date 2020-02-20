@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BancoCapgeminiApi.Controllers
 {
     [ApiController]
-    [Route("v1/clientes")]
+    [Route("api/clientes")]
     public class ClietneController : ControllerBase
     {
         [HttpGet]
