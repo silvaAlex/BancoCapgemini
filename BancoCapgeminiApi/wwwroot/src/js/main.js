@@ -44,15 +44,77 @@ function _displayItems(data) {
   dropdown.addEventListener("change", event => {
     let selectElement = event.target;
     let value = selectElement.value;
-    const uriClientes = uri + "/contas/" + value;
-    fetch(uriClientes)
-      .then(response => response.json())
-      .then(data => buscaSaldo(data));
+    buscaSaldo(value);
   });
 }
 
-function buscaSaldo(data) {
+function buscaSaldo(value) {
   let saldo = document.getElementById("saldo");
-  console.log(data);
-  saldo.innerHTML = data;
+
+  const uriClientes = uri + "/contas/" + value;
+  fetch(uriClientes)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      saldo.innerHTML = data;
+    });
+}
+
+function depositar(){
+
+  let dropdown = $("#titular").val();
+  const uriClientes = uri + "/deposito";
+  const moedaTextbox = document.getElementById("edit-moeda");
+
+  const item =  {
+    TitularId: parseInt(dropdown),
+    Moeda: parseFloat(moedaTextbox.value.trim())
+  }
+
+  console.log(item);
+
+  fetch(uriClientes, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(item)
+  })
+  .then(response =>  response.json())
+  .then((data) => {
+    console.log(data.titularId);
+    moedaTextbox.value = "";
+    buscaSaldo(data.titularId);
+  })
+  .catch(error => console.error("Unable to add item.", error));
+}
+
+function sacar(){
+  let dropdown = $("#titular").val();
+
+  const uriClientes = uri + "/saque";
+  const moedaTextbox = document.getElementById("edit-moeda");
+
+  const item = {
+    TitularId: parseInt(dropdown),
+    Moeda: parseFloat(moedaTextbox.value)
+  }
+
+  console.log(item);
+  fetch(uriClientes, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(item)
+  })
+  .then(response => response.json())
+  .then((data) => {
+    console.log(data.titularId);
+    moedaTextbox.value = "";
+    buscaSaldo(data.titularId);
+  })
+  .catch(error => console.error("Unable to add item.", error));
 }
